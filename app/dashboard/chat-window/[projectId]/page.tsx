@@ -204,13 +204,13 @@ export default function ChatWindowPage() {
           Project Details
         </Button>
 
-        {details1 && (
+        {details1 && currentProject && (
           <ProjectDetailsModal
             isOpen={details1}
             onClose={() => setDetails1(false)}
             proj={currentProject}
-          />
-        )}
+      />
+)}
       </div>
 
       {/* Messages container */}
