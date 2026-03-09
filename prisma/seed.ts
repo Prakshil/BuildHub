@@ -87,7 +87,8 @@ const admins = [
     { name: 'Sneha Nair' },
 ];
 
-
+async function seedAdmins() {
+    // First, create the main admin user
     const mainAdminEmail = 'PrakshilPatel.ict23@adaniuni.ac.in';
     const mainAdminPassword = await bcrypt.hash('Sdp050821', 12);
     
@@ -127,8 +128,7 @@ const admins = [
             });
         } catch (e) {
             console.log(`Admin ${email} already exists or error:`, e);
-        } },
-        });
+        }
     }
 }
 
