@@ -1,0 +1,51 @@
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "@/app/globals.css";
+import NavbarWrapper from "@/components/NavbarWrapper";
+import AuthContext from "./context/authContext";
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@/lib/authOptions';
+import { IsClientCtxProvider } from "./context/isClientContext";
+
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "BuildMate",
+  description: "The collaboration portal for Adani University students.",
+  icons: {
+    icon: "/favlogo.svg",
+  },
+};
+
+export default async function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  const session = await getServerSession(authOptions);
+
+  return (
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <AuthContext session={session}>
+          <NavbarWrapper />
+          <IsClientCtxProvider>
+            {children}
+          </IsClientCtxProvider>
+        </AuthContext>
+      </body>
+    </html>
+  );
+}
+/* vi: set et sw=2: */
