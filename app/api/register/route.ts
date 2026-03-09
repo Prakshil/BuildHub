@@ -3,10 +3,10 @@ import bcrypt from 'bcryptjs';
 import { prisma } from '@/lib/prisma';
 
 export async function POST(req: NextRequest) {
-    const { name, email, password } = await req.json();
+    const { name, email, password, department } = await req.json();
 
-    if (!name || !email || !password) {
-        return NextResponse.json({ error: 'Name, email and password are required.' }, { status: 400 });
+    if (!name || !email || !password || !department) {
+        return NextResponse.json({ error: 'Name, email, password and department are required.' }, { status: 400 });
     }
 
     if (!email.endsWith('@adaniuni.ac.in')) {
@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
             name,
             email,
             password: hashedPassword,
-            department: 'Unknown',
+            department,
             role: 'USER',
         },
     });

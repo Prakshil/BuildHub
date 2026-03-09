@@ -27,6 +27,7 @@ export async function GET(
         degree: true,
         rating: true,
         picture: true,
+        cv: true,
         applications: true,
         projectCreated: true,
         projectsParticipated: {

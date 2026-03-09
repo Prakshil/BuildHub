@@ -70,6 +70,7 @@ export interface User {
   branch            :       string
   department        :       string
   picture           :       string
+  cv                :       string
   accountCreatedAt   :      string
   passwordChangedAt   :     string
   passwordResetToken    :   string

@@ -20,6 +20,7 @@ export default function ProfilePage() {
     window.location.href = "/welcome";
   }
   const [userId, setId] = useState<string | null>(null);
+  const [userCv, setUserCv] = useState<string | null>(null);
   const email = session?.user?.email || "";
 
   const fetchid = async () => {
@@ -29,6 +30,7 @@ export default function ProfilePage() {
       );
       const data: User = await response.json();
       setId(data.id);
+      setUserCv(data.cv || null);
       // Return the ID for proper sequencing
     } catch (err) {
       console.error(err);
@@ -39,6 +41,10 @@ export default function ProfilePage() {
     fetchid();
     console.log(userId);
   }, [email]);
+
+  const handleCVUpdate = (newCvUrl: string) => {
+    setUserCv(newCvUrl);
+  };
 
   if (userId !== null) {
     return (
@@ -54,7 +60,7 @@ export default function ProfilePage() {
             <div>
               <UserDetails id={userId} />
               <ProfileBadges id={userId} />
-              <CVSection id={userId} />
+              <CVSection id={userId} cvUrl={userCv} isOwnProfile={true} onCVUpdate={handleCVUpdate} />
             </div>
           </div>
         </div>

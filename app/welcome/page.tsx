@@ -21,6 +21,7 @@ export default function LandingPage() {
     const [signUpEmail, setSignUpEmail] = useState('');
     const [signUpPassword, setSignUpPassword] = useState('');
     const [signUpConfirm, setSignUpConfirm] = useState('');
+    const [signUpDepartment, setSignUpDepartment] = useState('');
 
     const { status } = useSession();
     const router = useRouter();
@@ -72,7 +73,7 @@ export default function LandingPage() {
             const res = await fetch('/api/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: signUpName, email: signUpEmail, password: signUpPassword }),
+                body: JSON.stringify({ name: signUpName, email: signUpEmail, password: signUpPassword, department: signUpDepartment }),
             });
             const data = await res.json();
             if (!res.ok) {
@@ -198,6 +199,25 @@ export default function LandingPage() {
                                     placeholder="you@adaniuni.ac.in"
                                     className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400"
                                 />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Department</label>
+                                <select
+                                    required
+                                    value={signUpDepartment}
+                                    onChange={e => setSignUpDepartment(e.target.value)}
+                                    className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400"
+                                >
+                                    <option value="">Select Department</option>
+                                    <option value="Computer Science">Computer Science</option>
+                                    <option value="Information Technology">Information Technology</option>
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Mechanical">Mechanical</option>
+                                    <option value="Civil">Civil</option>
+                                    <option value="Electrical">Electrical</option>
+                                    <option value="Business Administration">Business Administration</option>
+                                    <option value="Other">Other</option>
+                                </select>
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>

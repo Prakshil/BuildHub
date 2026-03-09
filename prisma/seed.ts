@@ -2,6 +2,7 @@
 
 import prisma from '../config/prismaClient';
 import { DifficultyTag } from "@/types/leaderboard.ts";
+import bcrypt from 'bcryptjs';
 
 const students = [
     { name: 'Alice Verma', degree: 'BTech', year: '2024', branch: 'CS', serial: '01' },
@@ -28,6 +29,7 @@ async function add_students() {
         const roll = `${year.slice(2)}${degreeCode}${branch}${serial.padStart(2, '0')}`;
         const firstName = name.split(' ')[0].toLowerCase();
         const email = `${firstName}_${roll}@adaniuni.ac.in`;
+        const hashedPassword = await bcrypt.hash('testpass123', 12);
 
         await prisma.user.create({
             data: {
@@ -35,7 +37,7 @@ async function add_students() {
                 name,
                 roll,
                 email,
-                password: 'testpass123', // Replace with hashed password in prod
+                password: hashedPassword,
                 degree,
                 year,
                 department: branch,
@@ -61,8 +63,8 @@ const professors = [
 async function seedProfessors() {
     for (const prof of professors) {
         const [firstName, lastName] = prof.name.split(' ');
-        const username = `${firstName.toLowerCase()}_${prof.department.toLowerCase()}`;
-        const email = `${firstName.toLowerCase()}_${prof.department.toLowerCase()}@iitp.ac.in`;
+        const username = `${firstName.toLowerCase()}_${prof.department.toLowerCase(adaniuni.ac.in`;
+        const hashedPassword = await bcrypt.hash('testpass123', 12);
 
         await prisma.user.create({
             data: {
@@ -70,6 +72,7 @@ async function seedProfessors() {
                 name: prof.name,
                 email,
                 department: prof.department,
+                password: hashedPassword,
                 password: 'testpass123', // Replace with hashed password in production
                 role: 'PROFESSOR',
             },
@@ -84,21 +87,47 @@ const admins = [
     { name: 'Sneha Nair' },
 ];
 
-async function seedAdmins() {
+asyn// First, create the main admin user
+    const mainAdminEmail = 'PrakshilPatel.ict23@adaniuni.ac.in';
+    const mainAdminPassword = await bcrypt.hash('Sdp050821', 12);
+    
+    try {
+        await prisma.user.create({
+            data: {
+                username: 'prakshil_admin',
+                name: 'Prakshil Patel',
+                email: mainAdminEmail,
+                department: 'Information Technology',
+                password: mainAdminPassword,
+                role: 'ADMIN',
+            },
+        });
+        console.log('Main admin user created: PrakshilPatel.ict23@adaniuni.ac.in');
+    } catch (e) {
+        console.log('Main admin user already exists or error:', e);
+    }
+
+    // Create other test admins
     for (const admin of admins) {
         const [firstName, lastName] = admin.name.split(' ');
         const username = `${firstName.toLowerCase()}_admin`;
-        const email = `${firstName.toLowerCase()}_admin@iitp.ac.in`;
+        const email = `${firstName.toLowerCase()}_admin@adaniuni.ac.in`;
+        const hashedPassword = await bcrypt.hash('adminpass123', 12);
 
-        await prisma.user.create({
-            data: {
-                username,
-                name: admin.name,
-                email,
-                department: 'ADMIN',
-                password: 'adminpass123',
-                role: 'ADMIN',
-            },
+        try {
+            await prisma.user.create({
+                data: {
+                    username,
+                    name: admin.name,
+                    email,
+                    department: 'ADMIN',
+                    password: hashedPassword,
+                    role: 'ADMIN',
+                },
+            });
+        } catch (e) {
+            console.log(`Admin ${email} already exists or error:`, e);
+        } },
         });
     }
 }
