@@ -79,7 +79,6 @@ async function seedProfessors() {
         });
     }
 }
-}
 
 const admins = [
     { name: 'Alok Sharma' },
