@@ -6,9 +6,9 @@ const prisma = new PrismaClient();
 // GET: Fetch project details by ID
 export async function GET(
   req: Request,
-  context: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
-  const { id } = context.params;
+  const { id } = await context.params;
   console.log("Project ID:", id);
 
   if (!id) {
