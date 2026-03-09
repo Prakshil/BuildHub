@@ -87,7 +87,7 @@ const admins = [
     { name: 'Sneha Nair' },
 ];
 
-asyn// First, create the main admin user
+
     const mainAdminEmail = 'PrakshilPatel.ict23@adaniuni.ac.in';
     const mainAdminPassword = await bcrypt.hash('Sdp050821', 12);
     
