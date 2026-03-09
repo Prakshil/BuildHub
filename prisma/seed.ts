@@ -63,7 +63,8 @@ const professors = [
 async function seedProfessors() {
     for (const prof of professors) {
         const [firstName, lastName] = prof.name.split(' ');
-        const username = `${firstName.toLowerCase()}_${prof.department.toLowerCase(adaniuni.ac.in`;
+        const username = `${firstName.toLowerCase()}_${prof.department.toLowerCase()}`;
+        const email = `${firstName.toLowerCase()}_${prof.department.toLowerCase()}@adaniuni.ac.in`;
         const hashedPassword = await bcrypt.hash('testpass123', 12);
 
         await prisma.user.create({
@@ -73,11 +74,11 @@ async function seedProfessors() {
                 email,
                 department: prof.department,
                 password: hashedPassword,
-                password: 'testpass123', // Replace with hashed password in production
                 role: 'PROFESSOR',
             },
         });
     }
+}
 }
 
 const admins = [
